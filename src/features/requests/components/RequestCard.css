@@ -1,0 +1,90 @@
+.request-card {
+  position: relative;
+}
+
+.request-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.request-job-type {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.request-card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.4;
+}
+
+.request-card-description {
+  color: #4b5563;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+}
+
+.request-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.request-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.requester-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.requester-name {
+  font-weight: 600;
+  color: #374151;
+}
+
+.requester-rating {
+  font-size: 0.75rem;
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.request-time {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.applicants-badge {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: #10b981;
+  color: white;
+  padding: 0.375rem 0.875rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .request-card-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

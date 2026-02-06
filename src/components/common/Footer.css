@@ -1,0 +1,54 @@
+.bumble-footer {
+  padding: 64px 5%;
+  background: white;
+  border-top: 1px solid #eee;
+  width: 100%;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.footer-brand h3 {
+  font-size: 1.5rem;
+  color: #FFD54F;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-links a {
+  color: #000;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: #FFD54F;
+}
+
+.footer-social {
+  display: flex;
+  gap: 20px;
+  font-weight: 600;
+  color: #666;
+}
+
+/* Responsive Mobile */
+@media (max-width: 968px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+}

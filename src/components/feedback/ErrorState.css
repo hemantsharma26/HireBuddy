@@ -1,0 +1,29 @@
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  min-height: 300px;
+}
+
+.error-state-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.error-state-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ef4444;
+  margin: 0 0 0.75rem 0;
+}
+
+.error-state-description {
+  font-size: 1rem;
+  color: #6b7280;
+  max-width: 400px;
+  margin: 0 0 2rem 0;
+  line-height: 1.6;
+}
