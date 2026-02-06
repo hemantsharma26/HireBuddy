@@ -1,0 +1,77 @@
+{"level":"info","message":"✅ Configuration validated successfully","service":"hirebuddy-backend","timestamp":"2026-02-06 14:34:21"}
+{"level":"info","message":"🚀 Server running in development mode","service":"hirebuddy-backend","timestamp":"2026-02-06 14:34:31"}
+{"level":"info","message":"📡 Listening on port 5000","service":"hirebuddy-backend","timestamp":"2026-02-06 14:34:31"}
+{"level":"info","message":"🌐 API endpoint: http://localhost:5000/api/v1","service":"hirebuddy-backend","timestamp":"2026-02-06 14:34:31"}
+{"0":"b","1":"a","10":" ","11":"a","12":"u","13":"t","14":"h","15":"e","16":"n","17":"t","18":"i","19":"c","2":"d","20":"a","21":"t","22":"i","23":"o","24":"n","25":" ","26":"f","27":"a","28":"i","29":"l","3":" ","30":"e","31":"d","4":"a","5":"u","6":"t","7":"h","8":" ","9":":","level":"error","message":"❌ MongoDB connection failed:","service":"hirebuddy-backend","timestamp":"2026-02-06 14:34:32"}
+{"level":"info","message":"✅ Configuration validated successfully","service":"hirebuddy-backend","timestamp":"2026-02-06 14:38:21"}
+{"level":"info","message":"🚀 Server running in development mode","service":"hirebuddy-backend","timestamp":"2026-02-06 14:38:22"}
+{"level":"info","message":"📡 Listening on port 5000","service":"hirebuddy-backend","timestamp":"2026-02-06 14:38:22"}
+{"level":"info","message":"🌐 API endpoint: http://localhost:5000/api/v1","service":"hirebuddy-backend","timestamp":"2026-02-06 14:38:22"}
+{"level":"info","message":"✅ MongoDB connected successfully","service":"hirebuddy-backend","timestamp":"2026-02-06 14:38:23"}
+{"level":"info","message":"📊 Database: hirebuddies","service":"hirebuddy-backend","timestamp":"2026-02-06 14:38:23"}
+{"level":"info","message":"📱 OTP for 8127588871: 183706","service":"hirebuddy-backend","timestamp":"2026-02-06 15:08:25"}
+{"level":"info","message":"OTP sent to 8127588871","service":"hirebuddy-backend","timestamp":"2026-02-06 15:08:25"}
+{"level":"info","message":"📱 OTP for 8127588871: 758147","service":"hirebuddy-backend","timestamp":"2026-02-06 16:40:43"}
+{"level":"info","message":"OTP sent to 8127588871","service":"hirebuddy-backend","timestamp":"2026-02-06 16:40:43"}
+{"level":"info","message":"📱 OTP for 8127588871: 520931","service":"hirebuddy-backend","timestamp":"2026-02-06 16:41:19"}
+{"level":"info","message":"OTP sent to 8127588871","service":"hirebuddy-backend","timestamp":"2026-02-06 16:41:19"}
+{"level":"info","message":"📱 OTP for 8127588871: 120291","service":"hirebuddy-backend","timestamp":"2026-02-06 16:43:46"}
+{"level":"info","message":"OTP sent to 8127588871","service":"hirebuddy-backend","timestamp":"2026-02-06 16:43:46"}
+{"level":"info","message":"📱 OTP for 8127588871: 403531","service":"hirebuddy-backend","timestamp":"2026-02-06 16:44:55"}
+{"level":"info","message":"OTP sent to 8127588871","service":"hirebuddy-backend","timestamp":"2026-02-06 16:44:55"}
+{"level":"info","message":"✅ Configuration validated successfully","service":"hirebuddy-backend","timestamp":"2026-02-06 16:54:19"}
+{"level":"info","message":"🚀 Server running in development mode","service":"hirebuddy-backend","timestamp":"2026-02-06 16:54:22"}
+{"level":"info","message":"📡 Listening on port 5000","service":"hirebuddy-backend","timestamp":"2026-02-06 16:54:22"}
+{"level":"info","message":"🌐 API endpoint: http://localhost:5000/api/v1","service":"hirebuddy-backend","timestamp":"2026-02-06 16:54:22"}
+{"level":"info","message":"✅ MongoDB connected successfully","service":"hirebuddy-backend","timestamp":"2026-02-06 16:54:23"}
+{"level":"info","message":"📊 Database: hirebuddies","service":"hirebuddy-backend","timestamp":"2026-02-06 16:54:23"}
+{"level":"info","message":"✅ Configuration validated successfully","service":"hirebuddy-backend","timestamp":"2026-02-06 17:03:42"}
+{"level":"info","message":"🚀 Server running in development mode","service":"hirebuddy-backend","timestamp":"2026-02-06 17:03:45"}
+{"level":"info","message":"📡 Listening on port 5000","service":"hirebuddy-backend","timestamp":"2026-02-06 17:03:45"}
+{"level":"info","message":"🌐 API endpoint: http://localhost:5000/api/v1","service":"hirebuddy-backend","timestamp":"2026-02-06 17:03:45"}
+{"level":"info","message":"✅ MongoDB connected successfully","service":"hirebuddy-backend","timestamp":"2026-02-06 17:03:46"}
+{"level":"info","message":"📊 Database: hirebuddies","service":"hirebuddy-backend","timestamp":"2026-02-06 17:03:46"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 17:14:28"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 17:14:28"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 17:14:28"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 17:14:29"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 17:14:44"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 17:14:44"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 17:14:44"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 17:14:44"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 17:16:47"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 17:16:47"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 17:16:48"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 17:16:48"}
+{"level":"info","message":"✅ Configuration validated successfully","service":"hirebuddy-backend","timestamp":"2026-02-06 17:16:54"}
+{"level":"info","message":"🚀 Server running in development mode","service":"hirebuddy-backend","timestamp":"2026-02-06 17:16:55"}
+{"level":"info","message":"📡 Listening on port 5000","service":"hirebuddy-backend","timestamp":"2026-02-06 17:16:55"}
+{"level":"info","message":"🌐 API endpoint: http://localhost:5000/api/v1","service":"hirebuddy-backend","timestamp":"2026-02-06 17:16:55"}
+{"level":"info","message":"✅ MongoDB connected successfully","service":"hirebuddy-backend","timestamp":"2026-02-06 17:16:56"}
+{"level":"info","message":"📊 Database: hirebuddies","service":"hirebuddy-backend","timestamp":"2026-02-06 17:16:56"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 17:24:15"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 17:24:15"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 17:24:15"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 17:24:15"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 17:29:43"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 17:29:43"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 17:29:43"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 17:29:43"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 17:33:14"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 17:33:14"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 17:35:20"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 17:35:20"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 17:35:20"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 17:35:20"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 17:35:38"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 17:35:38"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 17:35:38"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 17:35:38"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 18:19:02"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 18:19:02"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 18:19:03"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 18:19:03"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 18:19:03"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 18:19:03"}
+{"level":"info","message":"Browsing requests for user: undefined","service":"hirebuddy-backend","timestamp":"2026-02-06 18:19:05"}
+{"level":"info","message":"Found 0 requests","service":"hirebuddy-backend","timestamp":"2026-02-06 18:19:06"}
