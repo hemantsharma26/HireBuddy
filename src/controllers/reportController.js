@@ -49,9 +49,19 @@ const unblockUser = asyncHandler(async (req, res) => {
   return successResponse(res, {}, REPORT_MESSAGES.USER_UNBLOCKED);
 });
 
+/**
+ * Get user's report history
+ */
+const getMyReports = asyncHandler(async (req, res) => {
+  const reports = await reportService.getMyReports(req.userId);
+  
+  return successResponse(res, { reports });
+});
+
 module.exports = {
   submitReport,
   blockUser,
   getBlockedUsers,
-  unblockUser
+  unblockUser,
+  getMyReports
 };

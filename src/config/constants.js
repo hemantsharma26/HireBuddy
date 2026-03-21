@@ -55,6 +55,10 @@ const REPORT_REASONS = [
   'spam',
   'safety_concern',
   'fraud',
+  'technical_issue',
+  'sos',
+  'verification_issue',
+  'billing_issue',
   'other'
 ];
 
@@ -62,7 +66,7 @@ const REPORT_REASONS = [
 const REPORT_STATUSES = ['pending', 'under_review', 'resolved', 'dismissed'];
 
 // Report priorities
-const REPORT_PRIORITIES = ['low', 'medium', 'high'];
+const REPORT_PRIORITIES = ['low', 'medium', 'high', 'critical'];
 
 // Resolution actions
 const RESOLUTION_ACTIONS = ['no_action', 'warning', 'temporary_ban', 'permanent_ban'];
@@ -77,7 +81,7 @@ const RATING_TYPES = ['requester', 'helper'];
 const OTP_EXPIRY_SECONDS = 300; // 5 minutes
 
 // OTP length
-const OTP_LENGTH = 6;
+const OTP_LENGTH = 4;
 
 // Minimum age
 const MINIMUM_AGE = 18;

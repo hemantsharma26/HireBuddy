@@ -1,4 +1,4 @@
-const rateLimit = require('express-rate-limit');
+const rateLimit = require("express-rate-limit");
 
 /**
  * General API rate limiter
@@ -8,11 +8,11 @@ const generalLimiter = rateLimit({
   max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 100,
   message: {
     success: false,
-    error: 'Too many requests, please try again later',
-    code: 'RATE_LIMIT'
+    error: "Too many requests, please try again later",
+    code: "RATE_LIMIT",
   },
   standardHeaders: true,
-  legacyHeaders: false
+  legacyHeaders: false,
 });
 
 /**
@@ -23,14 +23,14 @@ const otpLimiter = rateLimit({
   max: parseInt(process.env.OTP_RATE_LIMIT_MAX_REQUESTS) || 5,
   message: {
     success: false,
-    error: 'Too many OTP requests, please try again after an hour',
-    code: 'RATE_LIMIT'
+    error: "Too many OTP requests, please try again after an hour",
+    code: "RATE_LIMIT",
   },
   keyGenerator: (req) => {
     return req.body.phoneNumber || req.ip;
   },
   standardHeaders: true,
-  legacyHeaders: false
+  legacyHeaders: false,
 });
 
 /**
@@ -41,15 +41,34 @@ const chatLimiter = rateLimit({
   max: 50,
   message: {
     success: false,
-    error: 'Too many messages, please slow down',
-    code: 'RATE_LIMIT'
+    error: "Too many messages, please slow down",
+    code: "RATE_LIMIT",
   },
   standardHeaders: true,
-  legacyHeaders: false
+  legacyHeaders: false,
+});
+
+/**
+ * Auth (password login) rate limiter
+ */
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10,
+  message: {
+    success: false,
+    error: "Too many login attempts, please try again after 15 minutes",
+    code: "RATE_LIMIT",
+  },
+  keyGenerator: (req) => {
+    return req.body.email || req.ip;
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
 module.exports = {
   generalLimiter,
   otpLimiter,
-  chatLimiter
+  chatLimiter,
+  authLimiter,
 };

@@ -51,9 +51,9 @@ const getRequest = asyncHandler(async (req, res) => {
  */
 const applyToRequest = asyncHandler(async (req, res) => {
   const { requestId } = req.params;
-  const { message } = req.body;
+  const { message, bidAmount, availability } = req.body;
   
-  await requestService.applyToRequest(requestId, req.userId, message);
+  await requestService.applyToRequest(requestId, req.userId, message, bidAmount, availability);
   
   return successResponse(res, {}, REQUEST_MESSAGES.APPLICATION_SUBMITTED);
 });
@@ -123,6 +123,20 @@ const getAcceptedJobs = asyncHandler(async (req, res) => {
   );
 });
 
+/**
+ * Update hiring request
+ */
+const updateRequest = asyncHandler(async (req, res) => {
+  const { requestId } = req.params;
+  const request = await requestService.updateRequest(requestId, req.userId, req.body);
+  
+  return successResponse(
+    res,
+    { request },
+    REQUEST_MESSAGES.REQUEST_UPDATED
+  );
+});
+
 module.exports = {
   createRequest,
   browseRequests,
@@ -131,5 +145,6 @@ module.exports = {
   acceptApplicant,
   completeRequest,
   getMyRequests,
-  getAcceptedJobs
+  getAcceptedJobs,
+  updateRequest
 };

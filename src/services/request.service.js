@@ -17,7 +17,7 @@ class RequestService {
    * Create a new hiring request
    */
   async createRequest(userId, requestData) {
-    const { title, description, category, jobType, location, compensation, duration } = requestData;
+    const { title, description, category, jobType, location, compensation, duration, workersNeeded, vibes } = requestData;
     
     logger.info(`Creating request for user: ${userId}`);
     
@@ -34,7 +34,9 @@ class RequestService {
       jobType,
       location,
       compensation,
-      duration
+      duration,
+      workersNeeded,
+      vibes: vibes || []
     });
     
     // Populate requester details
@@ -45,12 +47,53 @@ class RequestService {
   }
 
   /**
+   * Update an existing hiring request
+   */
+  async updateRequest(requestId, userId, updateData) {
+    const { title, description, category, jobType, location, compensation, duration } = updateData;
+    
+    logger.info(`Updating request: ${requestId} for user: ${userId}`);
+    
+    // Get request
+    const request = await commonService.getEntityOrFail(
+      HiringRequest,
+      requestId,
+      REQUEST_MESSAGES.REQUEST_NOT_FOUND
+    );
+    
+    // Ensure ownership
+    permissionService.ensureOwnership(request, userId);
+    
+    // Ensure status is open (cannot edit accepted/completed jobs)
+    permissionService.ensureStatus(request, ['open']);
+    
+    // Moderate content if changed
+    if (title) moderateContent(title);
+    if (description) moderateContent(description);
+    
+    // Update fields
+    if (title) request.title = title;
+    if (description) request.description = description;
+    if (category) request.category = category;
+    if (jobType) request.jobType = jobType;
+    if (location) request.location = location;
+    if (compensation) request.compensation = compensation;
+    if (duration !== undefined) request.duration = duration;
+    if (workersNeeded !== undefined) request.workersNeeded = workersNeeded;
+    
+    await request.save();
+    
+    logger.info(`Request updated: ${request._id}`);
+    return request;
+  }
+
+  /**
    * Browse hiring requests with filters
    */
   async browseRequests(filters, userId, paginationParams) {
     logger.info(`Browsing requests for user: ${userId}`);
     
-    const { category, jobType, city, area, status = 'open' } = filters;
+    const { category, jobType, city, area, status = 'open', search, name, compensation, budget, title: titleFilter } = filters;
     
     // Build pagination
     const pagination = commonService.buildPagination(
@@ -61,7 +104,7 @@ class RequestService {
     
     // Build filter query
     const filter = commonService.buildFilterQuery(
-      { status },
+      { status: 'open' },
       {
         category: 'category',
         jobType: 'jobType',
@@ -70,6 +113,49 @@ class RequestService {
       },
       { category, jobType, city, area }
     );
+    
+    // Advanced Filters
+    if (name) {
+      const User = require('../models/User');
+      const users = await User.find({ 
+        displayName: { $regex: name, $options: 'i' } 
+      }).select('_id');
+      const userIds = users.map(u => u._id);
+      
+      if (filter.requesterId) {
+        // If already has requesterId filter (e.g. excluding self), combine with $in
+        const existingFilter = filter.requesterId;
+        filter.requesterId = { ...existingFilter, $in: userIds };
+      } else {
+        filter.requesterId = { $in: userIds };
+      }
+    }
+
+    if (titleFilter) {
+      filter.title = { $regex: titleFilter, $options: 'i' };
+    }
+
+    if (compensation || budget) {
+      const budgetValue = compensation || budget;
+      filter.compensation = { $regex: budgetValue, $options: 'i' };
+    }
+
+    // Text search (Global)
+    if (search) {
+      const User = require('../models/User');
+      const matchedUsers = await User.find({ 
+        displayName: { $regex: search, $options: 'i' } 
+      }).select('_id');
+      const matchedUserIds = matchedUsers.map(u => u._id);
+
+      filter.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } },
+        { category: { $regex: search, $options: 'i' } },
+        { compensation: { $regex: search, $options: 'i' } },
+        { requesterId: { $in: matchedUserIds } }
+      ];
+    }
 
     // Add geolocation filter if coordinates provided
     const { lat, lng } = filters;
@@ -81,17 +167,29 @@ class RequestService {
           $geometry: {
             type: 'Point',
             coordinates: [parseFloat(lng), parseFloat(lat)]
-          }
+          },
+          // Optional: max distance in meters
+          // $maxDistance: 50000 
         }
       };
-      // When using $near, sorting is handled by distance automatically by MongoDB
+      // MongoDB sorts by distance automatically with $near
       sort = {}; 
+    } else {
+      // Default sort by latest
+      sort = { createdAt: -1 };
     }
     
     // Exclude blocked users and own requests (if user is logged in)
     if (userId) {
       const blockedIds = await commonService.getBlockedUserIds(userId);
-      filter.requesterId = { $nin: [...blockedIds, userId] };
+      const excludeIds = [...blockedIds, userId];
+      
+      if (filter.requesterId) {
+        // Correctly merge with existing $in from the 'name' filter
+        filter.requesterId.$nin = excludeIds;
+      } else {
+        filter.requesterId = { $nin: excludeIds };
+      }
     }
     
     // Execute paginated query
@@ -100,7 +198,7 @@ class RequestService {
       filter,
       {
         sort,
-        populate: 'requesterId displayName profilePicture stats'
+        populate: { path: 'requesterId', select: 'displayName profilePicture stats' }
       },
       pagination
     );
@@ -145,7 +243,7 @@ class RequestService {
   /**
    * Apply to a hiring request
    */
-  async applyToRequest(requestId, userId, message) {
+  async applyToRequest(requestId, userId, message, bidAmount, availability) {
     logger.info(`User ${userId} applying to request: ${requestId}`);
     
     // Get request
@@ -165,8 +263,18 @@ class RequestService {
       REQUEST_MESSAGES.CANNOT_APPLY_OWN
     );
     
+    // Bid validation (±50% of original budget)
+    const budget = parseFloat(request.compensation.replace(/[^0-9.]/g, ''));
+    if (!isNaN(budget) && budget > 0) {
+      const min = budget * 0.5;
+      const max = budget * 1.5;
+      if (bidAmount < min || bidAmount > max) {
+        throw new Error(`Bid must be between ₹${min.toFixed(0)} and ₹${max.toFixed(0)} based on the budget.`);
+      }
+    }
+
     // Apply (model method handles duplicate check)
-    await request.addApplicant(userId, message);
+    await request.addApplicant(userId, { message, bidAmount, availability });
     
     logger.info(`Application submitted successfully`);
     return request;
@@ -257,7 +365,7 @@ class RequestService {
       filter,
       {
         sort: { createdAt: -1 },
-        populate: 'acceptedBy displayName profilePicture'
+        populate: { path: 'acceptedBy', select: 'displayName profilePicture' }
       },
       pagination
     );
@@ -282,7 +390,7 @@ class RequestService {
       { acceptedBy: userId },
       {
         sort: { acceptedAt: -1 },
-        populate: 'requesterId displayName profilePicture'
+        populate: { path: 'requesterId', select: 'displayName profilePicture' }
       },
       pagination
     );

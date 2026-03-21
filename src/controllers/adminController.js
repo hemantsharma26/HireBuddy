@@ -1,4 +1,5 @@
 const adminService = require('../services/admin.service');
+const ProfileConfig = require("../models/ProfileConfig");
 const { successResponse, paginationResponse } = require('../utils/responseHandler');
 const asyncHandler = require('../utils/asyncHandler');
 const { ADMIN_MESSAGES, REPORT_MESSAGES } = require('../constants/responseMessages');
@@ -117,6 +118,41 @@ const resolveReport = asyncHandler(async (req, res) => {
   return successResponse(res, {}, REPORT_MESSAGES.REPORT_RESOLVED);
 });
 
+/**
+ * Update dynamic profile configuration options
+ */
+const updateProfileOptions = asyncHandler(async (req, res) => {
+  const {
+    ageRanges,
+    pronouns,
+    languages,
+    vibes,
+    helpSituations,
+    availabilitySlots,
+    comfortSettings,
+    trustLayerFields
+  } = req.body;
+
+  let config = await ProfileConfig.findOne({ isSingleton: true });
+
+  if (!config) {
+    config = new ProfileConfig({ isSingleton: true });
+  }
+
+  if (ageRanges) config.ageRanges = ageRanges;
+  if (pronouns) config.pronouns = pronouns;
+  if (languages) config.languages = languages;
+  if (vibes) config.vibes = vibes;
+  if (helpSituations) config.helpSituations = helpSituations;
+  if (availabilitySlots) config.availabilitySlots = availabilitySlots;
+  if (comfortSettings) config.comfortSettings = comfortSettings;
+  if (trustLayerFields) config.trustLayerFields = trustLayerFields;
+
+  await config.save();
+  
+  return successResponse(res, { config }, "Profile options updated successfully");
+});
+
 module.exports = {
   getStats,
   getAllUsers,
@@ -125,5 +161,6 @@ module.exports = {
   changeUserRole,
   getAllReports,
   updateReport,
-  resolveReport
+  resolveReport,
+  updateProfileOptions
 };

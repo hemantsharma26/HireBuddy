@@ -55,7 +55,7 @@ See `.env.example` for required variables:
 
 ## 📡 API Documentation
 
-- Base URL: `http://localhost:5000/api/v1`
+- Base URL: `http://localhost:8080/api/v1`
 - Health Check: `GET /api/v1/health`
 
 ### Main Endpoints

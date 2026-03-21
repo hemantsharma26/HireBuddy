@@ -2,11 +2,15 @@ const axios = require('axios');
 const config = require('../config');
 const logger = require('../utils/logger');
 
+const { OTP_LENGTH } = require('../config/constants');
+
 /**
- * Generate 6-digit OTP
+ * Generate dynamic digit OTP
  */
 const generateOTP = () => {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+  const min = Math.pow(10, OTP_LENGTH - 1);
+  const max = Math.pow(10, OTP_LENGTH) - 1 - min;
+  return Math.floor(min + Math.random() * max).toString();
 };
 
 /**
@@ -54,6 +58,44 @@ const sendOTPViaMSG91 = async (phoneNumber, otp) => {
 };
 
 /**
+ * Send OTP via Email
+ */
+const sendEmailOTP = async (email, otp) => {
+  // In development mode, just log the OTP
+  if (config.isDevelopment()) {
+    logger.info(`📧 OTP for ${email}: ${otp}`);
+    return true;
+  }
+
+  try {
+    const nodemailer = require('nodemailer');
+    
+    // Create transporter (Example using Gmail/SMTP - should be in config)
+    const transporter = nodemailer.createTransport({
+      service: config.email.service,
+      auth: {
+        user: config.email.user,
+        pass: config.email.pass
+      }
+    });
+
+    const mailOptions = {
+      from: `"HireBuddy Verification" <${config.email.user}>`,
+      to: email,
+      subject: 'Your HireBuddy Verification Code',
+      text: `Your HireBuddy verification code is: ${otp}. It will expire in ${config.otp.expiresIn / 60} minutes.`
+    };
+
+    await transporter.sendMail(mailOptions);
+    return true;
+  } catch (error) {
+    logger.error('Nodemailer error:', error);
+    // Don't throw in production if you want to fail gracefully, but here we want to know
+    throw new Error('Failed to send verification email');
+  }
+};
+
+/**
  * Main send OTP function
  * Routes to appropriate SMS provider based on configuration
  */
@@ -74,5 +116,6 @@ const sendOTP = async (phoneNumber, otp) => {
 
 module.exports = {
   generateOTP,
-  sendOTP
+  sendOTP,
+  sendEmailOTP
 };

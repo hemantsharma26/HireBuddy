@@ -110,6 +110,12 @@ const config = {
   logging: {
     level: env.LOG_LEVEL
   },
+
+  email: {
+    service: env.EMAIL_SERVICE,
+    user: env.EMAIL_USER,
+    pass: env.EMAIL_PASS
+  },
   
   // Helper functions
   isDevelopment: () => env.NODE_ENV === 'development',

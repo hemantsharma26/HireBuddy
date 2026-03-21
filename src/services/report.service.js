@@ -15,13 +15,14 @@ class ReportService {
    * Submit a report
    */
   async submitReport(userId, reportData) {
-    const { reportedUserId, reportedRequestId, reason, description } = reportData;
+    const { reportedUserId, reportedRequestId, reason, description, priority } = reportData;
     
     logger.info(`User ${userId} submitting report`);
     
-    // Validate: must report either user or request
-    if (!reportedUserId && !reportedRequestId) {
-      throw new ValidationError(REPORT_MESSAGES.MUST_REPORT_SOMETHING);
+    // Validate: must report either user or request, unless it's a general support ticket or issue
+    const isTargetRequired = !['technical_issue', 'sos', 'other', 'verification_issue', 'billing_issue', 'safety_concern'].includes(reason);
+    if (isTargetRequired && !reportedUserId && !reportedRequestId) {
+      throw new ValidationError(REPORT_MESSAGES.MUST_REPORT_USER_OR_REQUEST);
     }
     
     // Create report
@@ -30,7 +31,8 @@ class ReportService {
       reportedUserId,
       reportedRequestId,
       reason,
-      description
+      description,
+      priority: priority || 'medium'
     });
     
     logger.info(`Report created: ${report._id}`);
@@ -87,6 +89,24 @@ class ReportService {
     });
     
     logger.info(`User unblocked successfully`);
+  }
+
+  /**
+   * Get report history for a user
+   */
+  async getMyReports(userId) {
+    logger.info(`Fetching report history for user: ${userId}`);
+    
+    const reports = await Report.find({ reporterId: userId })
+      .populate('reportedUserId', 'displayName profilePicture')
+      .populate('reportedRequestId', 'title category')
+      .populate('assignedTo', 'displayName')
+      .populate('resolution.resolvedBy', 'displayName')
+      .sort({ createdAt: -1 })
+      .lean();
+    
+    logger.info(`Found ${reports.length} reports for user ${userId}`);
+    return reports;
   }
 }
 

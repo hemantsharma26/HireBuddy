@@ -1,12 +1,10 @@
 const mongoose = require("mongoose");
-const config = require('./index');
+const config = require("./index");
 const logger = require("../utils/logger");
 
 const connectDatabase = async () => {
   try {
     const options = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
       maxPoolSize: 10,
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
