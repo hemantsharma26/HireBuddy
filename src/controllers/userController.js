@@ -130,6 +130,10 @@ const getBuddies = asyncHandler(async (req, res) => {
       page: req.query.page,
       limit: req.query.limit,
       search: req.query.search,
+      category: req.query.category,
+      minPrice: req.query.minPrice,
+      maxPrice: req.query.maxPrice,
+      sort: req.query.sort,
       vibes
     }
   );

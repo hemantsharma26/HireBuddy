@@ -15,4 +15,11 @@ router.get('/', discoveryController.getExploreData);
  */
 router.get('/profile-options', discoveryController.getProfileOptions);
 
+/**
+ * @route   GET /api/v1/discovery/buddies
+ * @desc    Get recommended buddies for the home page (Public)
+ * @access  Public
+ */
+router.get('/buddies', discoveryController.getRecommendedBuddies);
+
 module.exports = router;

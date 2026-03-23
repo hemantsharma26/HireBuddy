@@ -61,6 +61,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    category: {
+      type: String,
+      trim: true,
+      default: "Other"
+    },
 
     // Location
     location: {
@@ -242,6 +247,7 @@ userSchema.index({ "location.coordinates": "2dsphere" });
 userSchema.index({ role: 1 });
 userSchema.index({ status: 1 });
 userSchema.index({ vibes: 1 });
+userSchema.index({ category: 1 });
 
 // Virtual for public profile
 userSchema.virtual("publicProfile").get(function () {
@@ -255,6 +261,8 @@ userSchema.virtual("publicProfile").get(function () {
       city: this.location.city,
       area: this.location.area,
     },
+    category: this.category,
+    ratePerHour: this.ratePerHour,
     availability: this.availability,
     stats: {
       averageRating: this.stats.averageRating,

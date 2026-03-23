@@ -47,8 +47,9 @@ class DiscoveryService {
 
     // Format stats with strings like "10k+", "1.5k+" for the frontend
     const heroStats = {
+      buddyFind: '12,842', // Mocked or calculated
+      meetBuddy: totalConnections > 1000 ? `${(totalConnections / 1000).toFixed(1)}k+` : totalConnections.toString(),
       totalBuddies: totalBuddies > 1000 ? `${(totalBuddies / 1000).toFixed(1)}k+` : totalBuddies.toString(),
-      totalConnections: totalConnections > 1000 ? `${(totalConnections / 1000).toFixed(1)}k+` : totalConnections.toString(),
       buddiesLabel: 'qualified buddies',
       connectionsLabel: 'human connections'
     };
@@ -91,11 +92,38 @@ class DiscoveryService {
         slug: c.slug,
         icon: c.icon,
         color: c.color,
+        image: c.image, // Include image from DB
         buddies: countMap[c.slug] || 0
       })),
       trendingNeeds,
       vibes
     };
+  }
+
+  /**
+   * Get recommended public buddies for the Home page
+   */
+  async getRecommendedBuddies(limit = 5) {
+    logger.info(`Fetching ${limit} recommended buddies`);
+    
+    // Fetch top rated buddies or recently active ones
+    const buddies = await User.find({ status: 'active', role: 'buddy' })
+      .sort({ averageRating: -1, totalJobs: -1 })
+      .limit(limit)
+      .select('displayName location ratePerHour verificationLevel bio skills totalJobs averageRating avatar category lastActive')
+      .lean();
+      
+    // Add some default fields for the frontend like 'category', 'price', etc.
+    return buddies.map(buddy => ({
+      ...buddy,
+      name: buddy.displayName,
+      image: buddy.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400',
+      price: buddy.ratePerHour || 500,
+      responseTime: '15 mins',
+      rating: buddy.averageRating || 5.0,
+      jobsCompleted: buddy.totalJobs || 0,
+      lastActive: 'Just now'
+    }));
   }
 }
 

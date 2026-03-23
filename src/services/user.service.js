@@ -235,14 +235,19 @@ class UserService {
   async getBuddies(userId, queryParams) {
     logger.info(`Fetching buddies for user ${userId} with search: ${queryParams.search}`);
 
-    const { page, limit, search, vibes } = queryParams;
+    const { page, limit, search, vibes, category, minPrice, maxPrice, sort } = queryParams;
     const pagination = commonService.buildPagination(page, limit);
 
     // Build query
     const query = {
-      _id: { $ne: userId }, // Exclude current user
-      status: 'active'
+      role: 'user', // Back to user role
+      status: 'active',
+      category: { $exists: true, $ne: 'Other' } // Only show users who offering help
     };
+
+    if (userId) {
+      query._id = { $ne: userId }; // Exclude current user if logged in
+    }
 
     if (search) {
       const searchRegex = new RegExp(search, 'i');
@@ -259,16 +264,43 @@ class UserService {
       query.vibes = { $in: vibes };
     }
 
+    // Filter by category
+    if (category && category !== "All Needs") {
+      query.category = category;
+    }
+
+    // Filter by price range
+    if (minPrice !== undefined || maxPrice !== undefined) {
+      query.ratePerHour = {};
+      if (minPrice !== undefined) query.ratePerHour.$gte = Number(minPrice);
+      if (maxPrice !== undefined) query.ratePerHour.$lte = Number(maxPrice);
+    }
+
+    // Determine Sort
+    let sortCriteria = { availability: 1, 'stats.averageRating': -1, createdAt: -1 };
+    if (sort) {
+      switch (sort) {
+        case 'trust':
+          sortCriteria = { 'stats.averageRating': -1, 'stats.totalRatings': -1 };
+          break;
+        case 'available':
+          sortCriteria = { availability: 1, lastLoginAt: -1 };
+          break;
+        case 'budget':
+          sortCriteria = { ratePerHour: 1 };
+          break;
+        case 'newest':
+          sortCriteria = { createdAt: -1 };
+          break;
+      }
+    }
+
     const result = await commonService.executePaginatedQuery(
       User,
       query,
       {
-        sort: {
-          availability: 1, // 'available' < 'busy'
-          'stats.averageRating': -1,
-          createdAt: -1
-        },
-        select: 'displayName bio profilePicture location stats availability vibes createdAt'
+        sort: sortCriteria,
+        select: 'displayName bio profilePicture location stats availability vibes createdAt category ratePerHour tagline'
       },
       pagination
     );

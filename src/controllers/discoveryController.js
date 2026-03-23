@@ -18,7 +18,17 @@ const getProfileOptions = asyncHandler(async (req, res) => {
   return successResponse(res, { data });
 });
 
+/**
+ * Get recommended buddies
+ */
+const getRecommendedBuddies = asyncHandler(async (req, res) => {
+  const limit = parseInt(req.query.limit, 10) || 5;
+  const buddies = await discoveryService.getRecommendedBuddies(limit);
+  return successResponse(res, { buddies });
+});
+
 module.exports = {
   getExploreData,
-  getProfileOptions
+  getProfileOptions,
+  getRecommendedBuddies
 };

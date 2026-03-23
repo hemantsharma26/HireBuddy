@@ -13,7 +13,7 @@ const {
   getSavedBuddies,
   uploadAvatar: uploadAvatarController
 } = require("../controllers/userController");
-const { auth } = require("../middlewares/auth");
+const { auth, optionalAuth } = require("../middlewares/auth");
 const uploadAvatarMiddleware = require("../utils/uploadAvatar");
 
 /**
@@ -81,7 +81,7 @@ const uploadAvatarMiddleware = require("../utils/uploadAvatar");
  *                           type: array
  *                           items: { $ref: '#/components/schemas/User' }
  */
-router.get("/", auth, getBuddies);
+router.get("/", optionalAuth, getBuddies);
 
 router.get("/me", auth, getMyProfile);
 
@@ -241,7 +241,7 @@ router.patch("/me/availability", auth, updateAvailability);
  *       404:
  *         description: User not found
  */
-router.get("/:userId", auth, getUserProfile);
+router.get("/:userId", optionalAuth, getUserProfile);
 
 /**
  * @swagger
@@ -290,7 +290,7 @@ router.get("/:userId", auth, getUserProfile);
  *                             average: { type: number }
  *                             count: { type: integer }
  */
-router.get("/:userId/ratings", auth, getUserRatings);
+router.get("/:userId/ratings", optionalAuth, getUserRatings);
 
 /**
  * @swagger

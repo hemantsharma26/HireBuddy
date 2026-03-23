@@ -20,6 +20,18 @@ const BLOCKED_KEYWORDS = [
 
 // Job categories
 const JOB_CATEGORIES = [
+  'Just Need to Talk',
+  'Feeling Lonely',
+  'Breakup / Heartbreak',
+  'Anxiety / Overthinking',
+  'Career Confusion',
+  'Study Stress',
+  'Late Night Support',
+  'Homesickness',
+  'Need a Companion',
+  'Real Life Help',
+  'Emergency Situation',
+  'Just Need Someone Around',
   'medicine_pickup',
   'household_help',
   'companionship',

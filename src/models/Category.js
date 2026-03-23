@@ -23,6 +23,10 @@ const categorySchema = new mongoose.Schema(
       type: String,
       default: "#FFD700", // Default gold/yellow
     },
+    image: {
+      type: String,
+      required: false,
+    },
     isActive: {
       type: Boolean,
       default: true,
